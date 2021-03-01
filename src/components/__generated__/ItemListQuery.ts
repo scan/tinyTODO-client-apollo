@@ -19,9 +19,16 @@ export interface ItemListQuery_items_edges {
   node: ItemListQuery_items_edges_node;
 }
 
+export interface ItemListQuery_items_pageInfo {
+  __typename: "PageInfo";
+  endCursor: any;
+  hasNextPage: boolean;
+}
+
 export interface ItemListQuery_items {
   __typename: "ItemConnection";
   edges: ItemListQuery_items_edges[];
+  pageInfo: ItemListQuery_items_pageInfo;
 }
 
 export interface ItemListQuery {

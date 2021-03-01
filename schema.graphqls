@@ -33,21 +33,63 @@ directive @connection(
 ) on FIELD
 
 """"""
+scalar Time
+
+""""""
+input NewItem {
+  """"""
+  title: String!
+
+  """"""
+  content: String
+}
+
+""""""
+type ItemConnection {
+  """"""
+  edges: [ItemEdge!]!
+
+  """"""
+  pageInfo: PageInfo!
+}
+
+""""""
+type Query {
+  """"""
+  items(first: Int = 10, after: Cursor): ItemConnection!
+}
+
+""""""
+type PageInfo {
+  """"""
+  hasNextPage: Boolean!
+
+  """"""
+  hasPreviousPage: Boolean!
+
+  """"""
+  endCursor: Cursor!
+
+  """"""
+  startCursor: Cursor!
+}
+
+""""""
+interface Node {
+  """"""
+  id: ID!
+}
+
+""""""
+scalar Cursor
+
+""""""
 type Mutation {
   """"""
   addItem(item: NewItem!): Item
 
   """"""
   removeItem(id: ID!): Boolean!
-}
-
-""""""
-type ItemEdge {
-  """"""
-  node: Item!
-
-  """"""
-  cursor: Cursor!
 }
 
 """"""
@@ -66,52 +108,10 @@ type Item implements Node {
 }
 
 """"""
-type ItemConnection {
+type ItemEdge {
   """"""
-  edges: [ItemEdge!]!
-
-  """"""
-  pageInfo: PageInfo!
-}
-
-""""""
-scalar Time
-
-""""""
-input NewItem {
-  """"""
-  title: String!
+  node: Item!
 
   """"""
-  content: String
-}
-
-""""""
-interface Node {
-  """"""
-  id: ID!
-}
-
-""""""
-scalar Cursor
-
-""""""
-type Query {
-  """"""
-  items(first: Int! = 10, after: Cursor): ItemConnection!
-}
-
-""""""
-type PageInfo {
-  """"""
-  hasNextPage: Boolean!
-
-  """"""
-  hasPreviousPage: Boolean!
-
-  """"""
-  endCursor: Cursor!
-
-  """"""
-  startCursor: Cursor!
+  cursor: Cursor!
 }
