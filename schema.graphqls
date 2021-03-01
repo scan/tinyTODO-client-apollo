@@ -1,0 +1,117 @@
+"""
+Direct the client to resolve this field locally, either from the cache or local resolvers.
+"""
+directive @client(
+  """
+  When true, the client will never use the cache for this value. See
+  https://www.apollographql.com/docs/react/essentials/local-state/#forcing-resolvers-with-clientalways-true
+  """
+  always: Boolean
+) on FIELD | FRAGMENT_DEFINITION | INLINE_FRAGMENT
+
+"""
+Export this locally resolved field as a variable to be used in the remainder of this query. See
+https://www.apollographql.com/docs/react/essentials/local-state/#using-client-fields-as-variables
+"""
+directive @export(
+  """The variable name to export this field as."""
+  as: String!
+) on FIELD
+
+"""
+Specify a custom store key for this result. See
+https://www.apollographql.com/docs/react/advanced/caching/#the-connection-directive
+"""
+directive @connection(
+  """Specify the store key."""
+  key: String!
+
+  """
+  An array of query argument names to include in the generated custom store key.
+  """
+  filter: [String!]
+) on FIELD
+
+""""""
+type Mutation {
+  """"""
+  addItem(item: NewItem!): Item
+
+  """"""
+  removeItem(id: ID!): Boolean!
+}
+
+""""""
+type ItemEdge {
+  """"""
+  node: Item!
+
+  """"""
+  cursor: Cursor!
+}
+
+""""""
+type Item implements Node {
+  """"""
+  id: ID!
+
+  """"""
+  title: String!
+
+  """"""
+  content: String
+
+  """"""
+  createdAt: Time!
+}
+
+""""""
+type ItemConnection {
+  """"""
+  edges: [ItemEdge!]!
+
+  """"""
+  pageInfo: PageInfo!
+}
+
+""""""
+scalar Time
+
+""""""
+input NewItem {
+  """"""
+  title: String!
+
+  """"""
+  content: String
+}
+
+""""""
+interface Node {
+  """"""
+  id: ID!
+}
+
+""""""
+scalar Cursor
+
+""""""
+type Query {
+  """"""
+  items(first: Int! = 10, after: Cursor): ItemConnection!
+}
+
+""""""
+type PageInfo {
+  """"""
+  hasNextPage: Boolean!
+
+  """"""
+  hasPreviousPage: Boolean!
+
+  """"""
+  endCursor: Cursor!
+
+  """"""
+  startCursor: Cursor!
+}

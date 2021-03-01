@@ -5,6 +5,7 @@ import "core-js/es/array";
 import "core-js/es/object";
 
 import * as React from "react";
+import { ApolloProvider } from "@apollo/client";
 
 import Head from "next/head";
 import type { AppProps } from "next/app";
@@ -13,6 +14,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 import theme from "~/theme";
+import apolloClient from "~/apollo";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
@@ -25,8 +27,10 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
         />
       </Head>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Component {...pageProps} />
+        <ApolloProvider client={apolloClient}>
+          <CssBaseline />
+          <Component {...pageProps} />
+        </ApolloProvider>
       </ThemeProvider>
     </>
   );

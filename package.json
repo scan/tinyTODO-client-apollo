@@ -6,12 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "relay": "relay-compiler --src ./src --language typescript --schema ./schema.graphqls --extensions ts tsx"
+    "gql:update-schema": "apollo client:download-schema ./schema.graphqls",
+    "gql:generate": "apollo client:codegen --globalTypesFile=./src/api.d.ts --target=typescript"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.11",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "core-js": "^3.9.1",
+    "graphql": "^15.5.0",
     "next": "^10.0.7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -21,6 +24,7 @@
     "@types/core-js": "^2.5.4",
     "@types/node": "^14.14.31",
     "@types/react": "^17.0.2",
+    "apollo": "^2.32.5",
     "typescript": "^4.2.2"
   }
 }
